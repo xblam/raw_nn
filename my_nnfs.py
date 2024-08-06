@@ -4,22 +4,43 @@ from nnfs.datasets import spiral_data
 
 nnfs.init()
 
-weights = [[1,2,3,4,5],
-           [2,3,4,5,6],
-           [3,4,5,6,7]]
-bias = [1,2,3]
-weights2 = [[1,2,3],
-           [2,3,4],
-           [3,4,5]]
-bias2 = [1,2,3]
-input = [[1,2,3,4,5]] # typically the inputs would be a matrix as well already
+# if you want to print you can just call the print function of the variables of the class
+class Dense_layer:
+    def __init__(self, num_inputs, num_neurons):
+        self.weights = 0.001 * np.random.randn(num_inputs, num_neurons)
+        self.biases = np.zeros(num_neurons)
 
-output1 = np.dot(np.array(input), np.array(weights).T) + bias
+    def forward(self, inputs):
+        self.output = np.dot(inputs, self.weights) + self.biases
 
-print(output1)
+class ReLU():
+    def forward(self, input):
+        self.output = np.maximum(0,input)
 
-output2 = np.dot(output1, np.array(weights2).T)
-print(output2)
+class SoftMax():
+    def forward(self, input):
+        exponentials = np.exp(input - np.max(input, axis=1, keepdims = True))
+        probabilities = exponentials/(np.sum(exponentials, axis=1, keepdims=True))
+        self.output = probabilities
+
+
+if __name__ == "__main__":
+    X,y = spiral_data(samples=100, classes=3)
+    dense = Dense_layer(2,3)
+    dense2 = Dense_layer(3,3)
+    relu = ReLU()
+    relu2 = ReLU()
+    dense.forward(X)
+    relu.forward(dense.output)
+    dense2.forward(relu.output)
+    softmax = SoftMax()
+    softmax.forward(dense2.output)
+    print(softmax.output[:5])
+
+
+
+
+        
 
 
 
