@@ -1,25 +1,22 @@
 import numpy as np
 import nnfs
 from nnfs.datasets import spiral_data
+import matplotlib.pyplot as plt
 
+
+
+plt.close('all')
 nnfs.init()
+import matplotlib.pyplot as plt
+X,y = spiral_data(samples=100, classes = 3)
+plt.scatter(X[:,0],X[:,1], c=y, cmap='brg')
+# plt.show(block = False)
+# plt.pause(0.001)
+# input('hit any key to end: ')
+# plt.close('all')
 
-weights = [[1,2,3,4,5],
-           [2,3,4,5,6],
-           [3,4,5,6,7]]
-bias = [1,2,3]
-weights2 = [[1,2,3],
-           [2,3,4],
-           [3,4,5]]
-bias2 = [1,2,3]
-input = [[1,2,3,4,5]] # typically the inputs would be a matrix as well already
-
-output1 = np.dot(np.array(input), np.array(weights).T) + bias
-
-print(output1)
-
-output2 = np.dot(output1, np.array(weights2).T)
-print(output2)
-
-
-
+class Dense_layer:
+    def __init__(self, n_inputs, n_neurons):
+        pass
+    def forward(self, n_inputs):
+        pass
