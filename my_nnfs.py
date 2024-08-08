@@ -15,9 +15,6 @@ plt.scatter(X[:,0],X[:,1], c=y, cmap='brg')
 # input('hit any key to end: ')
 # plt.close('all')
 
-class Activation_ReLU():
-    def forward(self, inputs):
-        self.output = np.maximum(0, inputs)
 
 class Dense_layer():
     def __init__(self, n_inputs, n_neurons):
@@ -26,18 +23,6 @@ class Dense_layer():
     
     def forward(self, inputs):
         self.output = np.dot(inputs, self.weights) + self.biases
-
-if __name__ == '__main__':
-    X, y = spiral_data(samples=100, classes=3)
-
-    dense1 = Dense_layer(2,3)
-    activation = Activation_ReLU()
-
-    dense1.forward(X)
-    activation.forward(dense1.output)
-    def __init__(self, num_inputs, num_neurons):
-        self.weights = 0.001 * np.random.randn(num_inputs, num_neurons)
-        self.biases = np.zeros(num_neurons)
 
     def forward(self, inputs):
         self.output = np.dot(inputs, self.weights) + self.biases
@@ -66,14 +51,14 @@ class Loss_CategoricalCrossentropy(Loss):
 
 
 
-        if len(y_true.shape) == 1: # this is for if the shape is a list
+        if len(y_true.shape) == 1: # this is for if the shape is a list of value of the classes, 
             correct_confidences = y_pred_clipped[range(samples), y_true]
         
-        if len(y_true.shape) == 2:
+        if len(y_true.shape) == 2: # if the shape of the true output is hot-value, we deal with it like this
             corrent_confidences = np.sum(y_pred_clipped*y_true, axis=1)
 
         negative_log_likelihoods = -np.log(correct_confidences)
-        return regative_log_likelihoods
+        return negative_log_likelihoods
 
 
 if __name__ == "__main__":
